@@ -1,8 +1,9 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import { StartupProgress, Stage, Step } from "./model";
-import { Card, CardContent, Chip, Typography } from "@mui/material";
 import { ChangeEvent } from "react";
+import Box from "@mui/material/Box";
+import { Card, CardContent, Chip, Checkbox, Grid } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { StartupProgress, Stage, Step } from "./model";
 
 export interface ProgressViewProps {
   startupProgress: StartupProgress;
@@ -33,18 +34,36 @@ function StageView({
   }
 
   return (
-    <Card sx={{ margin: 1 }}>
+    <Card sx={{ margin: 2 }}>
       <CardContent>
-        <h2>
-          <Chip label={stageNumber + 1} /> {stage.name}
-        </h2>
+        <Grid container spacing={2}>
+          <Grid item xs={10}>
+            <h2>
+              <Chip
+                label={stageNumber + 1}
+                color={stage.completed ? "success" : "primary"}
+              />{" "}
+              {stage.name}
+            </h2>
+          </Grid>
+          <Grid item xs={2}>
+            {stage.completed && (
+              <CheckCircleIcon
+                color="success"
+                sx={{ margin: 2 }}
+                fontSize="large"
+              />
+            )}
+          </Grid>
+        </Grid>
+
         <div>
           {stage.steps.map((step, index) => (
             <StepView
               step={step}
               stepNumber={index}
               onStepCompleteChange={handleStepComplete}
-              showCheckbox={isUnlocked}
+              enableCheckbox={isUnlocked}
               key={index}
             />
           ))}
@@ -58,12 +77,12 @@ function StepView({
   step,
   stepNumber,
   onStepCompleteChange,
-  showCheckbox,
+  enableCheckbox,
 }: {
   step: Step;
   stepNumber: number;
   onStepCompleteChange: (stepNumber: number, completed: boolean) => void;
-  showCheckbox: boolean;
+  enableCheckbox: boolean;
 }) {
   function handleCompleted(event: ChangeEvent<HTMLInputElement>) {
     onStepCompleteChange(stepNumber, event.target.checked);
@@ -71,13 +90,11 @@ function StepView({
 
   return (
     <div>
-      {showCheckbox && (
-        <input
-          type="checkbox"
-          checked={step.completed}
-          onChange={handleCompleted}
-        />
-      )}{" "}
+      <Checkbox
+        checked={step.completed}
+        onChange={handleCompleted}
+        disabled={!enableCheckbox}
+      />
       {step.name}
     </div>
   );
