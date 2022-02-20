@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { StartupProgress, Stage, Step } from "./model";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, CardContent, Chip, Typography } from "@mui/material";
 import { ChangeEvent } from "react";
 
 export interface ProgressViewProps {
@@ -35,7 +35,9 @@ function StageView({
   return (
     <Card sx={{ margin: 1 }}>
       <CardContent>
-        <h2>{stage.name}</h2>
+        <h2>
+          <Chip label={stageNumber + 1} /> {stage.name}
+        </h2>
         <div>
           {stage.steps.map((step, index) => (
             <StepView
@@ -69,7 +71,6 @@ function StepView({
 
   return (
     <div>
-      {step.name}{" "}
       {showCheckbox && (
         <input
           type="checkbox"
@@ -77,6 +78,7 @@ function StepView({
           onChange={handleCompleted}
         />
       )}{" "}
+      {step.name}
     </div>
   );
 }
