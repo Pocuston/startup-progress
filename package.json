@@ -9,6 +9,7 @@
     "@mui/material": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "nanoid": "^3.3.1",
     "react": "latest",
     "react-dom": "latest",
     "react-scripts": "latest",

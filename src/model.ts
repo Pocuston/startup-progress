@@ -1,12 +1,12 @@
 export interface Stage {
-  id?: string;
+  id: string;
   name: string;
   steps: Step[];
   completed: boolean;
 }
 
 export interface Step {
-  id?: string;
+  id: string;
   name: string;
   completed: boolean;
 }

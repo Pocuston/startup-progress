@@ -10,6 +10,7 @@ export interface StepViewProps {
   enableCheckbox: boolean;
 }
 
+//TODO: rename
 export default function StepView({
   step,
   stepNumber,

@@ -1,22 +1,19 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { StartupProgress, Stage } from "./model";
+import { Stage } from "./model";
 import StageView from "./StageView";
+import useStartupProgressData from "./useStartupProgressData";
+import AddStage from "./AddStage";
 
-export interface ProgressViewProps {
-  startupProgress: StartupProgress;
-  onStepComplete: (
-    stageNumber: number,
-    stepNumber: number,
-    completed: boolean
-  ) => void;
-}
+export default function ProgressView() {
+  const [
+    startupProgress,
+    handleStepCompleteChange,
+    handleAddStage,
+    handleAddStep,
+  ] = useStartupProgressData();
 
-export default function ProgressView({
-  startupProgress,
-  onStepComplete,
-}: ProgressViewProps) {
-  function isUnlocked(stage: Stage, stageNumber: number): boolean {
+  function isStageUnlocked(stage: Stage, stageNumber: number): boolean {
     return (
       !stage.completed &&
       (stageNumber === 0 || startupProgress.stages[stageNumber - 1]?.completed)
@@ -30,11 +27,16 @@ export default function ProgressView({
         <StageView
           stage={stage}
           stageNumber={index}
-          onStepCompleteChange={onStepComplete}
-          isUnlocked={isUnlocked(stage, index)}
+          onStepCompleteChange={handleStepCompleteChange}
+          onAddStep={handleAddStep}
+          isUnlocked={isStageUnlocked(stage, index)}
           key={index}
         />
       ))}
+      <AddStage
+        stageNumber={startupProgress.stages.length + 1}
+        onAddStage={handleAddStage}
+      />
     </Box>
   );
 }
