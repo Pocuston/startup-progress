@@ -69,12 +69,26 @@ export default function StageView({
   onStepCompleteChange,
   onAddStep,
 }: StageViewProps) {
+  const [showAddStep, setShowAddStep] = useState(false);
+
   function handleStepComplete(stepNumber: number, completed: boolean) {
     onStepCompleteChange(stageNumber, stepNumber, completed);
   }
 
+  function handleMouseEnter() {
+    setShowAddStep(true);
+  }
+
+  function handleMouseLeave() {
+    setShowAddStep(false);
+  }
+
   return (
-    <Card sx={{ margin: 2 }}>
+    <Card
+      sx={{ margin: 2 }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={10}>
@@ -107,7 +121,9 @@ export default function StageView({
               key={index}
             />
           ))}
-          <AddStep stageId={stage.id} onAddStep={onAddStep} />
+          <Box sx={{ visibility: showAddStep ? "visible" : "hidden", mt: 1 }}>
+            <AddStep stageId={stage.id} onAddStep={onAddStep} />
+          </Box>
         </div>
       </CardContent>
     </Card>
