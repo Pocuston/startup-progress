@@ -109,7 +109,7 @@ export default function StageView({
               onCancel={handleAddCancel}
             />
           )}
-          {isUnlocked && (
+          {!stage.completed && (
             <Button
               onClick={handleAddStepStart}
               disabled={isAddInProgress}

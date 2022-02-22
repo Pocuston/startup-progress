@@ -1,12 +1,10 @@
 import * as React from "react";
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import { Stage } from "./model";
 import StageView from "./StageView";
 import useStartupProgressData from "./useStartupProgressData";
 import AddStage from "./AddStage";
-import { Button, Typography } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { Typography } from "@mui/material";
 import RandomFact from "./RandomFact";
 
 //TODO veci z hooku do modelu
@@ -20,29 +18,12 @@ export default function ProgressView() {
     handleDeleteStep,
   ] = useStartupProgressData();
 
-  const [isAddStageInProgress, setIsAddStageInProgress] = useState(
-    startupProgress.stages.length === 0
-  );
-
   //TODO move to model
   function isStageUnlocked(stage: Stage, stageNumber: number): boolean {
     return (
       !stage.completed &&
       (stageNumber === 0 || startupProgress.stages[stageNumber - 1]?.completed)
     );
-  }
-
-  function handleAddStageStart() {
-    setIsAddStageInProgress(true);
-  }
-
-  function handleAddStageCancel() {
-    setIsAddStageInProgress(false);
-  }
-
-  function handleAddStageComplete(name: string) {
-    handleAddStage(name);
-    setIsAddStageInProgress(false);
   }
 
   return (
@@ -62,23 +43,16 @@ export default function ProgressView() {
           key={index}
         />
       ))}
-      {isAddStageInProgress && (
-        <AddStage
-          stageNumber={startupProgress?.stages.length + 1}
-          onAddStage={handleAddStageComplete}
-          onCancel={handleAddStageCancel}
-        />
-      )}
-      <Button
-        sx={{ ml: 1 }}
-        onClick={handleAddStageStart}
-        disabled={isAddStageInProgress}
-        startIcon={<AddIcon />}
-      >
-        Add stage
-      </Button>
+      <AddStage
+        stageNumber={startupProgress?.stages.length + 1}
+        onAddStage={handleAddStage}
+        showForm={startupProgress.stages.length === 0}
+      />
       <RandomFact
-        show={startupProgress.stages.every((stage) => stage.completed)}
+        show={
+          startupProgress.stages.length > 0 &&
+          startupProgress.stages.every((stage) => stage.completed)
+        }
       />
     </Box>
   );
