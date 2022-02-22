@@ -1,5 +1,12 @@
 import { ChangeEvent, useState } from "react";
-import { Button, Card, CardContent, Chip, TextField } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  IconButton,
+  TextField,
+} from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import AddIcon from "@mui/icons-material/Add";
 import * as React from "react";
@@ -44,17 +51,12 @@ export default function AddStage({
             autoFocus={true}
             onChange={handleNameChange}
           />{" "}
-          <Button
-            onClick={handleAddStage}
-            variant="contained"
-            disabled={name === ""}
-            startIcon={<CheckIcon />}
-          >
-            Add stage
-          </Button>
-          <Button onClick={handleCancel} startIcon={<CancelIcon />}>
-            Cancel
-          </Button>
+          <IconButton onClick={handleAddStage} disabled={name === ""}>
+            <CheckIcon />
+          </IconButton>
+          <IconButton onClick={handleCancel}>
+            <CancelIcon />
+          </IconButton>
         </h2>
       </CardContent>
     </Card>

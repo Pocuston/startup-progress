@@ -4,7 +4,7 @@ import { Stage } from "./model";
 import StageView from "./StageView";
 import useStartupProgressData from "./useStartupProgressData";
 import AddStage from "./AddStage";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -44,7 +44,9 @@ export default function ProgressView() {
 
   return (
     <Box>
-      <h1>{startupProgress.name}</h1>
+      <Typography variant={"h3"} sx={{ ml: 2, mt: 2 }}>
+        {startupProgress.name}
+      </Typography>
       {startupProgress?.stages.map((stage, index) => (
         <StageView
           stage={stage}
@@ -63,6 +65,7 @@ export default function ProgressView() {
         />
       )}
       <Button
+        sx={{ ml: 1 }}
         onClick={handleAddStageStart}
         disabled={isAddStageInProgress}
         startIcon={<AddIcon />}

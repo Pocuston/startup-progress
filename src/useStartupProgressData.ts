@@ -56,8 +56,8 @@ export default function useStartupProgressData(): [
 
       return localStorageValue !== null
         ? JSON.parse(localStorageValue)
-        : //: defaultStartupProgress;
-          { name: "", stages: [] };
+        : defaultStartupProgress;
+      //:  { name: "", stages: [] };
     }
   );
 

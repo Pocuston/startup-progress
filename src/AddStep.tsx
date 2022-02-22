@@ -1,8 +1,9 @@
 import * as React from "react";
 import { ChangeEvent, useState } from "react";
-import { Box, Checkbox, IconButton, TextField } from "@mui/material";
+import { Box, Button, Checkbox, IconButton, TextField } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CancelIcon from "@mui/icons-material/Cancel";
+import CloseIcon from "@mui/icons-material/Close";
 
 export interface AddStepProps {
   stageId: string;
@@ -49,7 +50,7 @@ export default function AddStep({
         <CheckIcon />
       </IconButton>
       <IconButton onClick={handleCancelClick}>
-        <CancelIcon />
+        <CloseIcon />
       </IconButton>
     </Box>
   );

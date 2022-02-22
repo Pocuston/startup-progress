@@ -87,13 +87,15 @@ export default function StageView({
               onCancel={handleAddCancel}
             />
           )}
-          <Button
-            onClick={handleAddStepStart}
-            disabled={isAddInProgress}
-            startIcon={<AddIcon />}
-          >
-            Add step
-          </Button>
+          {isUnlocked && (
+            <Button
+              onClick={handleAddStepStart}
+              disabled={isAddInProgress}
+              startIcon={<AddIcon />}
+            >
+              Add step
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
