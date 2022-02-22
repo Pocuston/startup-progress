@@ -7,6 +7,7 @@ import {
   Box,
   TextField,
   Button,
+  Checkbox,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import * as React from "react";
@@ -44,6 +45,7 @@ export function AddStep({ stageId, onAddStep }: AddStepProps) {
 
   return (
     <Box>
+      <Checkbox checked={false} disabled={true} />
       <TextField
         value={name}
         size="small"
@@ -69,26 +71,12 @@ export default function StageView({
   onStepCompleteChange,
   onAddStep,
 }: StageViewProps) {
-  const [showAddStep, setShowAddStep] = useState(false);
-
   function handleStepComplete(stepNumber: number, completed: boolean) {
     onStepCompleteChange(stageNumber, stepNumber, completed);
   }
 
-  function handleMouseEnter() {
-    setShowAddStep(true);
-  }
-
-  function handleMouseLeave() {
-    setShowAddStep(false);
-  }
-
   return (
-    <Card
-      sx={{ margin: 2 }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <Card sx={{ margin: 2 }}>
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={10}>
@@ -121,9 +109,10 @@ export default function StageView({
               key={index}
             />
           ))}
-          <Box sx={{ visibility: showAddStep ? "visible" : "hidden", mt: 1 }}>
+          <Box sx={{}}>
             <AddStep stageId={stage.id} onAddStep={onAddStep} />
           </Box>
+          <Button>+ Add step</Button>
         </div>
       </CardContent>
     </Card>

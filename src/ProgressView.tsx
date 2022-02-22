@@ -4,6 +4,8 @@ import { Stage } from "./model";
 import StageView from "./StageView";
 import useStartupProgressData from "./useStartupProgressData";
 import AddStage from "./AddStage";
+import { Button, Grid } from "@mui/material";
+import { useState } from "react";
 
 export default function ProgressView() {
   const [
@@ -13,6 +15,8 @@ export default function ProgressView() {
     handleAddStep,
   ] = useStartupProgressData();
 
+  const [editMode, setEditMode] = useState(startupProgress.stages.length === 0);
+
   function isStageUnlocked(stage: Stage, stageNumber: number): boolean {
     return (
       !stage.completed &&
@@ -20,10 +24,23 @@ export default function ProgressView() {
     );
   }
 
+  function handleCancel() {
+    setEditMode(false);
+  }
+
   return (
     <Box>
-      <h1>{startupProgress.name}</h1>
-      {startupProgress.stages.map((stage, index) => (
+      <h1>
+        <Grid container spacing={2}>
+          <Grid item xs={10}>
+            {startupProgress.name}
+          </Grid>
+          <Grid item xs={2}>
+            {editMode && <Button>Ok</Button>}
+          </Grid>
+        </Grid>
+      </h1>
+      {startupProgress?.stages.map((stage, index) => (
         <StageView
           stage={stage}
           stageNumber={index}
@@ -34,7 +51,7 @@ export default function ProgressView() {
         />
       ))}
       <AddStage
-        stageNumber={startupProgress.stages.length + 1}
+        stageNumber={startupProgress?.stages.length + 1}
         onAddStage={handleAddStage}
       />
     </Box>
