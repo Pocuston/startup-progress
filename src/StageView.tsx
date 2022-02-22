@@ -1,7 +1,15 @@
 import { Stage } from "./model";
-import { Button, Card, CardContent, Chip, Grid } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Grid,
+  IconButton,
+} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import * as React from "react";
 import { useState } from "react";
 import StepView from "./StepView";
@@ -17,6 +25,8 @@ export interface StageViewProps {
     completed: boolean
   ) => void;
   onAddStep: (stageId: string, name: string) => void;
+  onDeleteStage: (stageId: string) => void;
+  onDeleteStep: (stageId: string, stepId: string) => void;
 }
 
 //TODO: rename
@@ -26,6 +36,8 @@ export default function StageView({
   isUnlocked,
   onStepCompleteChange,
   onAddStep,
+  onDeleteStage,
+  onDeleteStep,
 }: StageViewProps) {
   const [isAddInProgress, setIsAddInProgress] = useState(false);
 
@@ -46,37 +58,47 @@ export default function StageView({
     setIsAddInProgress(false);
   }
 
+  function handleDelete() {
+    onDeleteStage(stage.id);
+  }
+
+  function handleDeleteStep(stepId: string) {
+    onDeleteStep(stage.id, stepId);
+  }
+
   return (
     <Card sx={{ margin: 2 }}>
       <CardContent>
-        <Grid container spacing={2}>
-          <Grid item xs={10}>
-            <h2>
+        <h2>
+          <Grid container spacing={2}>
+            <Grid item xs={10}>
               <Chip
                 label={stageNumber + 1}
                 color={stage.completed ? "success" : "primary"}
               />{" "}
               {stage.name}
-            </h2>
+            </Grid>
+            <Grid item xs={2}>
+              {stage.completed && (
+                <CheckCircleIcon color="success" fontSize="large" />
+              )}
+              {!stage.completed && (
+                <IconButton onClick={handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
+              )}
+            </Grid>
           </Grid>
-          <Grid item xs={2}>
-            {stage.completed && (
-              <CheckCircleIcon
-                color="success"
-                sx={{ margin: 2 }}
-                fontSize="large"
-              />
-            )}
-          </Grid>
-        </Grid>
-
+        </h2>
         <div>
           {stage.steps.map((step, index) => (
             <StepView
               step={step}
               stepNumber={index}
               onStepCompleteChange={handleStepComplete}
+              onDeleteStep={handleDeleteStep}
               enableCheckbox={isUnlocked}
+              enableDelete={!stage.completed && !step.completed}
               key={index}
             />
           ))}

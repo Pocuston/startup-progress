@@ -15,6 +15,8 @@ export default function ProgressView() {
     handleStepCompleteChange,
     handleAddStage,
     handleAddStep,
+    handleDeleteStage,
+    handleDeleteStep,
   ] = useStartupProgressData();
 
   const [isAddStageInProgress, setIsAddStageInProgress] = useState(
@@ -53,6 +55,8 @@ export default function ProgressView() {
           stageNumber={index}
           onStepCompleteChange={handleStepCompleteChange}
           onAddStep={handleAddStep}
+          onDeleteStage={handleDeleteStage}
+          onDeleteStep={handleDeleteStep}
           isUnlocked={isStageUnlocked(stage, index)}
           key={index}
         />

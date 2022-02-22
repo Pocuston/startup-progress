@@ -48,7 +48,9 @@ export default function useStartupProgressData(): [
   StartupProgress,
   (stageNumber: number, stepNumber: number, completed: boolean) => void,
   (name: string) => void,
-  (stageId: string, name: string) => void
+  (stageId: string, name: string) => void,
+  (stageId: string) => void,
+  (stageId: string, stepId: string) => void
 ] {
   const [startupProgress, setStartupProgress] = useState<StartupProgress>(
     () => {
@@ -114,10 +116,36 @@ export default function useStartupProgressData(): [
     return stage.steps.every((step) => step.completed);
   }
 
+  function handleDeleteStage(stageId: string) {
+    setStartupProgress((currentProgress) => {
+      const updatedProgress = { ...currentProgress };
+      updatedProgress.stages = updatedProgress.stages.filter(
+        (stage) => stage.id !== stageId
+      );
+      return updatedProgress;
+    });
+  }
+
+  function handleDeleteStep(stageId: string, stepId: string) {
+    setStartupProgress((currentProgress) => {
+      const updatedProgress = { ...currentProgress };
+      const stage = updatedProgress.stages.find(
+        (stage) => stage.id === stageId
+      );
+      if (stage !== undefined) {
+        stage.steps = stage.steps.filter((step) => step.id !== stepId);
+      }
+
+      return updatedProgress;
+    });
+  }
+
   return [
     startupProgress,
     handleStepCompleteChange,
     handleAddStage,
     handleAddStep,
+    handleDeleteStage,
+    handleDeleteStep,
   ];
 }

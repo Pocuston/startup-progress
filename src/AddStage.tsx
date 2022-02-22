@@ -11,6 +11,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import AddIcon from "@mui/icons-material/Add";
 import * as React from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
+import CloseIcon from "@mui/icons-material/Close";
 
 export interface AddStageProps {
   stageNumber: number;
@@ -55,7 +56,7 @@ export default function AddStage({
             <CheckIcon />
           </IconButton>
           <IconButton onClick={handleCancel}>
-            <CancelIcon />
+            <CloseIcon />
           </IconButton>
         </h2>
       </CardContent>
