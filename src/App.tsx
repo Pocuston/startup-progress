@@ -1,9 +1,6 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
 import ProgressView from "./ProgressView";
-import useStartupProgressData from "./useStartupProgressData";
-import Alert from "@mui/material/Alert";
 
 export default function App() {
   // const [randomFact, setRandomFact] = useState<string | null>(null);

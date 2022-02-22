@@ -1,16 +1,7 @@
-import { ChangeEvent, useState } from "react";
-import {
-  Button,
-  Card,
-  CardContent,
-  Chip,
-  IconButton,
-  TextField,
-} from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
-import AddIcon from "@mui/icons-material/Add";
 import * as React from "react";
-import CancelIcon from "@mui/icons-material/Cancel";
+import { ChangeEvent, useState } from "react";
+import { Card, CardContent, Chip, IconButton, TextField } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 
 export interface AddStageProps {

@@ -1,11 +1,11 @@
 import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { Stage } from "./model";
 import StageView from "./StageView";
 import useStartupProgressData from "./useStartupProgressData";
 import AddStage from "./AddStage";
-import { Button, Grid, Typography } from "@mui/material";
-import { useState } from "react";
+import { Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 //TODO veci z hooku do modelu

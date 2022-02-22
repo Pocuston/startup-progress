@@ -1,8 +1,8 @@
 import { Step } from "./model";
+import * as React from "react";
 import { ChangeEvent } from "react";
 import { Checkbox, Grid, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import * as React from "react";
 
 export interface StepViewProps {
   step: Step;
