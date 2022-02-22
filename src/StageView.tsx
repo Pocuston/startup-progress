@@ -8,11 +8,62 @@ import {
   TextField,
   Button,
   Checkbox,
+  IconButton,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AddIcon from "@mui/icons-material/Add";
+import CancelIcon from "@mui/icons-material/Cancel";
+import CheckIcon from "@mui/icons-material/Check";
 import * as React from "react";
 import StepView from "./StepView";
 import { ChangeEvent, useState } from "react";
+
+export interface AddStepProps {
+  stageId: string;
+  onAddStep: (stageId: string, name: string) => void;
+  onCancel: () => void;
+}
+
+export function AddStep({ stageId, onAddStep, onCancel }: AddStepProps) {
+  const [name, setName] = useState("");
+
+  function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
+    setName(event.target.value);
+  }
+
+  function handleAddStep() {
+    onAddStep(stageId, name);
+    setName("");
+  }
+
+  function handleCancelClick() {
+    setName("");
+    onCancel();
+  }
+
+  return (
+    <Box>
+      <Checkbox checked={false} disabled={true} />
+      <TextField
+        value={name}
+        size="small"
+        label="New step name"
+        autoFocus
+        onChange={handleNameChange}
+      />{" "}
+      <IconButton
+        onClick={handleAddStep}
+        disabled={name === ""}
+        color={"primary"}
+      >
+        <CheckIcon />
+      </IconButton>
+      <IconButton onClick={handleCancelClick}>
+        <CancelIcon />
+      </IconButton>
+    </Box>
+  );
+}
 
 export interface StageViewProps {
   stage: Stage;
@@ -26,43 +77,6 @@ export interface StageViewProps {
   onAddStep: (stageId: string, name: string) => void;
 }
 
-export interface AddStepProps {
-  stageId: string;
-  onAddStep: (stageId: string, name: string) => void;
-}
-
-export function AddStep({ stageId, onAddStep }: AddStepProps) {
-  const [name, setName] = useState<string>("");
-
-  function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
-    setName(event.target.value);
-  }
-
-  function handleAddStep() {
-    onAddStep(stageId, name);
-    setName("");
-  }
-
-  return (
-    <Box>
-      <Checkbox checked={false} disabled={true} />
-      <TextField
-        value={name}
-        size="small"
-        label="New step name"
-        onChange={handleNameChange}
-      />{" "}
-      <Button
-        onClick={handleAddStep}
-        variant="contained"
-        disabled={name === ""}
-      >
-        Add step
-      </Button>
-    </Box>
-  );
-}
-
 //TODO: rename
 export default function StageView({
   stage,
@@ -71,8 +85,23 @@ export default function StageView({
   onStepCompleteChange,
   onAddStep,
 }: StageViewProps) {
+  const [isAddInProgress, setIsAddInProgress] = useState(false);
+
   function handleStepComplete(stepNumber: number, completed: boolean) {
     onStepCompleteChange(stageNumber, stepNumber, completed);
+  }
+
+  function handleAddStepStart() {
+    setIsAddInProgress(true);
+  }
+
+  function handleAddCancel() {
+    setIsAddInProgress(false);
+  }
+
+  function handleAddStep(stageId: string, name: string) {
+    onAddStep(stageId, name);
+    setIsAddInProgress(false);
   }
 
   return (
@@ -109,10 +138,20 @@ export default function StageView({
               key={index}
             />
           ))}
-          <Box sx={{}}>
-            <AddStep stageId={stage.id} onAddStep={onAddStep} />
-          </Box>
-          <Button>+ Add step</Button>
+          {isAddInProgress && (
+            <AddStep
+              stageId={stage.id}
+              onAddStep={handleAddStep}
+              onCancel={handleAddCancel}
+            />
+          )}
+          <Button
+            onClick={handleAddStepStart}
+            disabled={isAddInProgress}
+            startIcon={<AddIcon />}
+          >
+            Add step
+          </Button>
         </div>
       </CardContent>
     </Card>
