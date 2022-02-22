@@ -5,7 +5,7 @@ import { Stage } from "./model";
 import StageView from "./StageView";
 import useStartupProgressData from "./useStartupProgressData";
 import AddStage from "./AddStage";
-import { Button, Typography } from "@mui/material";
+import { Alert, Button, Snackbar, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 //TODO veci z hooku do modelu
@@ -22,6 +22,11 @@ export default function ProgressView() {
   const [isAddStageInProgress, setIsAddStageInProgress] = useState(
     startupProgress.stages.length === 0
   );
+
+  const [randomFact, setRandomFact] = useState<{ fact: ""; show: boolean }>({
+    fact: "",
+    show: false,
+  });
 
   //TODO move to model
   function isStageUnlocked(stage: Stage, stageNumber: number): boolean {
@@ -43,6 +48,14 @@ export default function ProgressView() {
     handleAddStage(name);
     setIsAddStageInProgress(false);
   }
+
+  const handleRandomFactClose = (event: any, reason?: string) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setRandomFact({ fact: "", show: false });
+  };
 
   return (
     <Box>
@@ -76,6 +89,18 @@ export default function ProgressView() {
       >
         Add stage
       </Button>
+      <Snackbar
+        open={randomFact.show}
+        autoHideDuration={6000}
+        onClose={handleRandomFactClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity="info" onClose={handleRandomFactClose}>
+          <Typography variant={"subtitle1"}>
+            This is a success message!
+          </Typography>
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

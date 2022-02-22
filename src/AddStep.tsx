@@ -27,8 +27,8 @@ export default function AddStep({
   }
 
   function handleCancelClick() {
-    setName("");
     onCancel();
+    setName("");
   }
 
   return (
