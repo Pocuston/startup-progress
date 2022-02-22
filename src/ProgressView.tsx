@@ -6,7 +6,9 @@ import useStartupProgressData from "./useStartupProgressData";
 import AddStage from "./AddStage";
 import { Button, Grid } from "@mui/material";
 import { useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
 
+//TODO veci z hooku do modelu
 export default function ProgressView() {
   const [
     startupProgress,
@@ -15,8 +17,11 @@ export default function ProgressView() {
     handleAddStep,
   ] = useStartupProgressData();
 
-  const [editMode, setEditMode] = useState(startupProgress.stages.length === 0);
+  const [isAddStageInProgress, setIsAddStageInProgress] = useState(
+    startupProgress.stages.length === 0
+  );
 
+  //TODO move to model
   function isStageUnlocked(stage: Stage, stageNumber: number): boolean {
     return (
       !stage.completed &&
@@ -24,22 +29,22 @@ export default function ProgressView() {
     );
   }
 
-  function handleCancel() {
-    setEditMode(false);
+  function handleAddStageStart() {
+    setIsAddStageInProgress(true);
+  }
+
+  function handleAddStageCancel() {
+    setIsAddStageInProgress(false);
+  }
+
+  function handleAddStageComplete(name: string) {
+    handleAddStage(name);
+    setIsAddStageInProgress(false);
   }
 
   return (
     <Box>
-      <h1>
-        <Grid container spacing={2}>
-          <Grid item xs={10}>
-            {startupProgress.name}
-          </Grid>
-          <Grid item xs={2}>
-            {editMode && <Button>Ok</Button>}
-          </Grid>
-        </Grid>
-      </h1>
+      <h1>{startupProgress.name}</h1>
       {startupProgress?.stages.map((stage, index) => (
         <StageView
           stage={stage}
@@ -50,10 +55,20 @@ export default function ProgressView() {
           key={index}
         />
       ))}
-      <AddStage
-        stageNumber={startupProgress?.stages.length + 1}
-        onAddStage={handleAddStage}
-      />
+      {isAddStageInProgress && (
+        <AddStage
+          stageNumber={startupProgress?.stages.length + 1}
+          onAddStage={handleAddStageComplete}
+          onCancel={handleAddStageCancel}
+        />
+      )}
+      <Button
+        onClick={handleAddStageStart}
+        disabled={isAddStageInProgress}
+        startIcon={<AddIcon />}
+      >
+        Add stage
+      </Button>
     </Box>
   );
 }

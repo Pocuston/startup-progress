@@ -16,6 +16,7 @@ const theme = createTheme({
     background: {
       default: grey.A200,
     },
+    action: {},
   },
 });
 

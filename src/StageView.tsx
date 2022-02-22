@@ -1,69 +1,11 @@
 import { Stage } from "./model";
-import {
-  Card,
-  CardContent,
-  Chip,
-  Grid,
-  Box,
-  TextField,
-  Button,
-  Checkbox,
-  IconButton,
-} from "@mui/material";
+import { Button, Card, CardContent, Chip, Grid } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import AddIcon from "@mui/icons-material/Add";
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckIcon from "@mui/icons-material/Check";
 import * as React from "react";
+import { useState } from "react";
 import StepView from "./StepView";
-import { ChangeEvent, useState } from "react";
-
-export interface AddStepProps {
-  stageId: string;
-  onAddStep: (stageId: string, name: string) => void;
-  onCancel: () => void;
-}
-
-export function AddStep({ stageId, onAddStep, onCancel }: AddStepProps) {
-  const [name, setName] = useState("");
-
-  function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
-    setName(event.target.value);
-  }
-
-  function handleAddStep() {
-    onAddStep(stageId, name);
-    setName("");
-  }
-
-  function handleCancelClick() {
-    setName("");
-    onCancel();
-  }
-
-  return (
-    <Box>
-      <Checkbox checked={false} disabled={true} />
-      <TextField
-        value={name}
-        size="small"
-        label="New step name"
-        autoFocus
-        onChange={handleNameChange}
-      />{" "}
-      <IconButton
-        onClick={handleAddStep}
-        disabled={name === ""}
-        color={"primary"}
-      >
-        <CheckIcon />
-      </IconButton>
-      <IconButton onClick={handleCancelClick}>
-        <CancelIcon />
-      </IconButton>
-    </Box>
-  );
-}
+import AddStep from "./AddStep";
 
 export interface StageViewProps {
   stage: Stage;
