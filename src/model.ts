@@ -38,8 +38,8 @@ export function updateStepCompleted(
   completed: boolean
 ): StartupProgressModel {
   const updatedProgress = { ...currentProgress };
-  const stage = updatedProgress.stages.find((stage) => stage.id === stageId);
-  const step = stage?.steps.find((step) => step.id === stepId);
+  const stage = updatedProgress.stages.find((s) => s.id === stageId);
+  const step = stage?.steps.find((s) => s.id === stepId);
   if (stage !== undefined && step !== undefined) {
     step.completed = completed;
     stage.completed = isStageComplete(stage);
@@ -70,7 +70,7 @@ export function addStep(
   name: string
 ) {
   const updatedProgress = { ...currentProgress };
-  const stage = updatedProgress.stages.find((stage) => stage.id === stageId);
+  const stage = updatedProgress.stages.find((s) => s.id === stageId);
   const newStep = {
     id: nanoid(),
     name,
@@ -97,9 +97,9 @@ export function deleteStep(
   stepId: string
 ) {
   const updatedProgress = { ...currentProgress };
-  const stage = updatedProgress.stages.find((stage) => stage.id === stageId);
+  const stage = updatedProgress.stages.find((s) => s.id === stageId);
   if (stage !== undefined) {
-    stage.steps = stage.steps.filter((step) => step.id !== stepId);
+    stage.steps = stage.steps.filter((s) => s.id !== stepId);
   }
 
   return updatedProgress;
