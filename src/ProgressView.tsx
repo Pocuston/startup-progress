@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { Stage } from "./model";
+import { isStageUnlocked } from "./model";
 import StageView from "./StageView";
 import useStartupProgressData from "./useStartupProgressData";
 import AddStage from "./AddStage";
@@ -19,17 +19,6 @@ export default function ProgressView() {
     handleEditName,
   ] = useStartupProgressData();
 
-  //TODO move to model
-  function isStageUnlocked(stage: Stage): boolean {
-    const stageNumber = startupProgress.stages.findIndex(
-      (s) => s.id === stage.id
-    );
-    return (
-      !stage.completed &&
-      (stageNumber === 0 || startupProgress.stages[stageNumber - 1]?.completed)
-    );
-  }
-
   return (
     <Box>
       <StartupName name={startupProgress.name} onEditName={handleEditName} />
@@ -41,7 +30,7 @@ export default function ProgressView() {
           onAddStep={handleAddStep}
           onDeleteStage={handleDeleteStage}
           onDeleteStep={handleDeleteStep}
-          isUnlocked={isStageUnlocked(stage)}
+          isUnlocked={isStageUnlocked(startupProgress, stage)}
           key={stage.id}
         />
       ))}

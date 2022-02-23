@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
-import { Stage, StartupProgress } from "./model";
-import { nanoid } from "nanoid";
+import {
+  addStage,
+  addStep,
+  deleteStage,
+  deleteStep,
+  editStartupName,
+  StartupProgress,
+  updateStepCompleted,
+} from "./model";
 
 //TODO presunout
 const defaultStartupProgress: StartupProgress = {
@@ -60,7 +67,6 @@ export default function useStartupProgressData(): [
       return localStorageValue !== null
         ? JSON.parse(localStorageValue)
         : defaultStartupProgress;
-      //:  { name: "", stages: [] };
     }
   );
 
@@ -74,82 +80,37 @@ export default function useStartupProgressData(): [
     completed: boolean
   ) {
     setStartupProgress((currentProgress) => {
-      const updatedProgress = { ...currentProgress };
-      const stage = updatedProgress.stages.find(
-        (stage) => stage.id === stageId
-      );
-      const step = stage?.steps.find((step) => step.id === stepId);
-      if (stage !== undefined && step !== undefined) {
-        step.completed = completed;
-        stage.completed = isStageComplete(stage);
-      }
-
-      return updatedProgress;
+      return updateStepCompleted(currentProgress, stageId, stepId, completed);
     });
   }
 
   function handleAddStage(name: string) {
     setStartupProgress((currentProgress) => {
-      const updatedProgress = { ...currentProgress };
-      const newStage: Stage = {
-        id: nanoid(),
-        name,
-        steps: [],
-        completed: false,
-      };
-      updatedProgress.stages = [...currentProgress.stages, newStage];
-      return updatedProgress;
+      return addStage(currentProgress, name);
     });
   }
 
   function handleAddStep(stageId: string, name: string) {
     setStartupProgress((currentProgress) => {
-      const updatedProgress = { ...currentProgress };
-      const stage = updatedProgress.stages.find(
-        (stage) => stage.id === stageId
-      );
-      const newStep = {
-        id: nanoid(),
-        name,
-        completed: false,
-      };
-      stage?.steps.push(newStep);
-      return updatedProgress;
+      return addStep(currentProgress, stageId, name);
     });
-  }
-
-  function isStageComplete(stage: Stage): boolean {
-    return stage.steps.every((step) => step.completed);
   }
 
   function handleDeleteStage(stageId: string) {
     setStartupProgress((currentProgress) => {
-      const updatedProgress = { ...currentProgress };
-      updatedProgress.stages = updatedProgress.stages.filter(
-        (stage) => stage.id !== stageId
-      );
-      return updatedProgress;
+      return deleteStage(currentProgress, stageId);
     });
   }
 
   function handleDeleteStep(stageId: string, stepId: string) {
     setStartupProgress((currentProgress) => {
-      const updatedProgress = { ...currentProgress };
-      const stage = updatedProgress.stages.find(
-        (stage) => stage.id === stageId
-      );
-      if (stage !== undefined) {
-        stage.steps = stage.steps.filter((step) => step.id !== stepId);
-      }
-
-      return updatedProgress;
+      return deleteStep(currentProgress, stageId, stepId);
     });
   }
 
   function handleEditName(name: string) {
     setStartupProgress((currentProgress) => {
-      const updatedProgress = { ...currentProgress, name };
-      return updatedProgress;
+      return editStartupName(currentProgress, name);
     });
   }
 
