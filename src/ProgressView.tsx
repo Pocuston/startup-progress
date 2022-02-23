@@ -4,7 +4,6 @@ import { Stage } from "./model";
 import StageView from "./StageView";
 import useStartupProgressData from "./useStartupProgressData";
 import AddStage from "./AddStage";
-import { Typography } from "@mui/material";
 import RandomFact from "./RandomFact";
 import StartupName from "./StartupName";
 
