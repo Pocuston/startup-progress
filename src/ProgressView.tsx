@@ -21,7 +21,10 @@ export default function ProgressView() {
   ] = useStartupProgressData();
 
   //TODO move to model
-  function isStageUnlocked(stage: Stage, stageNumber: number): boolean {
+  function isStageUnlocked(stage: Stage): boolean {
+    const stageNumber = startupProgress.stages.findIndex(
+      (s) => s.id === stage.id
+    );
     return (
       !stage.completed &&
       (stageNumber === 0 || startupProgress.stages[stageNumber - 1]?.completed)
@@ -39,8 +42,8 @@ export default function ProgressView() {
           onAddStep={handleAddStep}
           onDeleteStage={handleDeleteStage}
           onDeleteStep={handleDeleteStep}
-          isUnlocked={isStageUnlocked(stage, index)}
-          key={index}
+          isUnlocked={isStageUnlocked(stage)}
+          key={stage.id}
         />
       ))}
       <AddStage

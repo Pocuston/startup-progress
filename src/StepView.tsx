@@ -7,8 +7,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 export interface StepViewProps {
   step: Step;
-  stepNumber: number;
-  onStepCompleteChange: (stepNumber: number, completed: boolean) => void;
+  onStepCompleteChange: (stepId: string, completed: boolean) => void;
   onDeleteStep: (stepId: string) => void;
   enableCheckbox: boolean;
   enableDelete: boolean;
@@ -17,7 +16,6 @@ export interface StepViewProps {
 //TODO: rename
 export default function StepView({
   step,
-  stepNumber,
   onStepCompleteChange,
   onDeleteStep,
   enableCheckbox,
@@ -25,7 +23,7 @@ export default function StepView({
 }: StepViewProps) {
   const [showDeleteButton, setShowDeleteButton] = useState(false);
   function handleCompleted(event: ChangeEvent<HTMLInputElement>) {
-    onStepCompleteChange(stepNumber, event.target.checked);
+    onStepCompleteChange(step.id, event.target.checked);
   }
 
   function handleDelete() {

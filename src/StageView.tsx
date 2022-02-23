@@ -20,8 +20,8 @@ export interface StageViewProps {
   stageNumber: number;
   isUnlocked: boolean;
   onStepCompleteChange: (
-    stageNumber: number,
-    stepNumber: number,
+    stageId: string,
+    stepId: string,
     completed: boolean
   ) => void;
   onAddStep: (stageId: string, name: string) => void;
@@ -40,10 +40,9 @@ export default function StageView({
   onDeleteStep,
 }: StageViewProps) {
   const [isAddInProgress, setIsAddInProgress] = useState(false);
-  const [showDeleteButton, setShowDeleteButton] = useState(false);
 
-  function handleStepComplete(stepNumber: number, completed: boolean) {
-    onStepCompleteChange(stageNumber, stepNumber, completed);
+  function handleStepComplete(stepId: string, completed: boolean) {
+    onStepCompleteChange(stage.id, stepId, completed);
   }
 
   function handleAddStepStart() {
@@ -67,20 +66,8 @@ export default function StageView({
     onDeleteStep(stage.id, stepId);
   }
 
-  function handleMouseEnter() {
-    setShowDeleteButton(true);
-  }
-
-  function handleMouseLeave() {
-    setShowDeleteButton(false);
-  }
-
   return (
-    <Card
-      sx={{ margin: 2 }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <Card sx={{ margin: 2 }}>
       <CardContent>
         <h2>
           <Grid container spacing={2}>
@@ -104,15 +91,14 @@ export default function StageView({
           </Grid>
         </h2>
         <div>
-          {stage.steps.map((step, index) => (
+          {stage.steps.map((step) => (
             <StepView
               step={step}
-              stepNumber={index}
               onStepCompleteChange={handleStepComplete}
               onDeleteStep={handleDeleteStep}
               enableCheckbox={isUnlocked}
               enableDelete={!stage.completed && !step.completed}
-              key={index}
+              key={step.id}
             />
           ))}
           {isAddInProgress && (

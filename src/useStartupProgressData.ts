@@ -46,7 +46,7 @@ const LOCAL_STORAGE_KEY = "startupProgress";
 
 export default function useStartupProgressData(): [
   StartupProgress,
-  (stageNumber: number, stepNumber: number, completed: boolean) => void,
+  (stageId: string, stepId: string, completed: boolean) => void,
   (name: string) => void,
   (stageId: string, name: string) => void,
   (stageId: string) => void,
@@ -68,17 +68,22 @@ export default function useStartupProgressData(): [
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(startupProgress));
   }, [startupProgress]);
 
-  //TODO predelat na stageId a stepId
   function handleStepCompleteChange(
-    stageNumber: number,
-    stepNumber: number,
+    stageId: string,
+    stepId: string,
     completed: boolean
   ) {
     setStartupProgress((currentProgress) => {
       const updatedProgress = { ...currentProgress };
-      const stage = updatedProgress.stages[stageNumber];
-      stage.steps[stepNumber].completed = completed;
-      stage.completed = isStageComplete(stage);
+      const stage = updatedProgress.stages.find(
+        (stage) => stage.id === stageId
+      );
+      const step = stage?.steps.find((step) => step.id === stepId);
+      if (stage !== undefined && step !== undefined) {
+        step.completed = completed;
+        stage.completed = isStageComplete(stage);
+      }
+
       return updatedProgress;
     });
   }
