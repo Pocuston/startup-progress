@@ -26,7 +26,7 @@ export default function AddStep({
     setName("");
   }
 
-  function handleCancelClick() {
+  function handleCancel() {
     onCancel();
     setName("");
   }
@@ -49,7 +49,7 @@ export default function AddStep({
       >
         <CheckIcon />
       </IconButton>
-      <IconButton onClick={handleCancelClick}>
+      <IconButton onClick={handleCancel}>
         <CloseIcon />
       </IconButton>
     </Box>

@@ -50,7 +50,8 @@ export default function useStartupProgressData(): [
   (name: string) => void,
   (stageId: string, name: string) => void,
   (stageId: string) => void,
-  (stageId: string, stepId: string) => void
+  (stageId: string, stepId: string) => void,
+  (name: string) => void
 ] {
   const [startupProgress, setStartupProgress] = useState<StartupProgress>(
     () => {
@@ -140,6 +141,13 @@ export default function useStartupProgressData(): [
     });
   }
 
+  function handleEditName(name: string) {
+    setStartupProgress((currentProgress) => {
+      const updatedProgress = { ...currentProgress, name };
+      return updatedProgress;
+    });
+  }
+
   return [
     startupProgress,
     handleStepCompleteChange,
@@ -147,5 +155,6 @@ export default function useStartupProgressData(): [
     handleAddStep,
     handleDeleteStage,
     handleDeleteStep,
+    handleEditName,
   ];
 }

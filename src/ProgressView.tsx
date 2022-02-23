@@ -6,6 +6,7 @@ import useStartupProgressData from "./useStartupProgressData";
 import AddStage from "./AddStage";
 import { Typography } from "@mui/material";
 import RandomFact from "./RandomFact";
+import StartupName from "./StartupName";
 
 //TODO veci z hooku do modelu
 export default function ProgressView() {
@@ -16,6 +17,7 @@ export default function ProgressView() {
     handleAddStep,
     handleDeleteStage,
     handleDeleteStep,
+    handleEditName,
   ] = useStartupProgressData();
 
   //TODO move to model
@@ -28,9 +30,7 @@ export default function ProgressView() {
 
   return (
     <Box>
-      <Typography variant={"h3"} sx={{ ml: 2, mt: 2 }}>
-        {startupProgress.name}
-      </Typography>
+      <StartupName name={startupProgress.name} onEditName={handleEditName} />
       {startupProgress?.stages.map((stage, index) => (
         <StageView
           stage={stage}
