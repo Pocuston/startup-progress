@@ -58,6 +58,8 @@ export default function AddStage({
                 label="New stage name"
                 autoFocus={true}
                 onChange={handleNameChange}
+                required={true}
+                inputProps={{ maxLength: 25, size: 25 }}
               />{" "}
               <IconButton onClick={handleAddStage} disabled={name === ""}>
                 <CheckIcon />
@@ -70,7 +72,7 @@ export default function AddStage({
         </Card>
       )}
       <Button
-        sx={{ ml: 1 }}
+        sx={{ ml: 2 }}
         onClick={handleAddStageStart}
         disabled={isAddStageInProgress}
         startIcon={<AddIcon />}

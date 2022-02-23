@@ -1,8 +1,9 @@
 import { Step } from "./model";
 import * as React from "react";
-import { ChangeEvent } from "react";
-import { Checkbox, Grid, IconButton } from "@mui/material";
+import { ChangeEvent, useState } from "react";
+import { Checkbox, Grid, IconButton, Toolbar } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ClearIcon from "@mui/icons-material/Clear";
 
 export interface StepViewProps {
   step: Step;
@@ -22,6 +23,7 @@ export default function StepView({
   enableCheckbox,
   enableDelete,
 }: StepViewProps) {
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
   function handleCompleted(event: ChangeEvent<HTMLInputElement>) {
     onStepCompleteChange(stepNumber, event.target.checked);
   }
@@ -30,8 +32,20 @@ export default function StepView({
     onDeleteStep(step.id);
   }
 
+  function handleMouseEnter() {
+    setShowDeleteButton(true);
+  }
+
+  function handleMouseLeave() {
+    setShowDeleteButton(false);
+  }
+
   return (
-    <Grid container>
+    <Grid
+      container
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <Grid item xs={10}>
         <Checkbox
           checked={step.completed}
@@ -43,8 +57,12 @@ export default function StepView({
       </Grid>
       <Grid item xs={2}>
         {enableDelete && (
-          <IconButton onClick={handleDelete} sx={{ ml: 1.5 }}>
-            <DeleteIcon />
+          <IconButton
+            onClick={handleDelete}
+            sx={{ marginLeft: "17px", color: "secondary.light" }}
+            size="small"
+          >
+            <ClearIcon fontSize={"small"} />
           </IconButton>
         )}
       </Grid>

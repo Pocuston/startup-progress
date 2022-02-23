@@ -40,6 +40,7 @@ export default function AddStep({
         label="New step name"
         autoFocus
         onChange={handleNameChange}
+        inputProps={{ maxLength: 35, size: 35 }}
       />
       <IconButton
         onClick={handleAddStep}

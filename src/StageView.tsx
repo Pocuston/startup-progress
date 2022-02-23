@@ -40,6 +40,7 @@ export default function StageView({
   onDeleteStep,
 }: StageViewProps) {
   const [isAddInProgress, setIsAddInProgress] = useState(false);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
 
   function handleStepComplete(stepNumber: number, completed: boolean) {
     onStepCompleteChange(stageNumber, stepNumber, completed);
@@ -66,8 +67,20 @@ export default function StageView({
     onDeleteStep(stage.id, stepId);
   }
 
+  function handleMouseEnter() {
+    setShowDeleteButton(true);
+  }
+
+  function handleMouseLeave() {
+    setShowDeleteButton(false);
+  }
+
   return (
-    <Card sx={{ margin: 2 }}>
+    <Card
+      sx={{ margin: 2 }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       <CardContent>
         <h2>
           <Grid container spacing={2}>
@@ -84,7 +97,7 @@ export default function StageView({
               )}
               {!stage.completed && (
                 <IconButton onClick={handleDelete}>
-                  <DeleteIcon />
+                  <DeleteIcon sx={{ color: "secondary.light" }} />
                 </IconButton>
               )}
             </Grid>
@@ -109,15 +122,26 @@ export default function StageView({
               onCancel={handleAddCancel}
             />
           )}
-          {!stage.completed && (
-            <Button
-              onClick={handleAddStepStart}
-              disabled={isAddInProgress}
-              startIcon={<AddIcon />}
-            >
-              Add step
-            </Button>
-          )}
+          <Grid container spacing={2}>
+            <Grid item xs={10}>
+              {!stage.completed && (
+                <Button
+                  onClick={handleAddStepStart}
+                  disabled={isAddInProgress}
+                  startIcon={<AddIcon />}
+                >
+                  Add step
+                </Button>
+              )}
+            </Grid>
+            <Grid item xs={2}>
+              {/*{!stage.completed && (*/}
+              {/*  <IconButton onClick={handleDelete} size="small">*/}
+              {/*    <DeleteIcon sx={{ color: "secondary.light" }} />*/}
+              {/*  </IconButton>*/}
+              {/*)}*/}
+            </Grid>
+          </Grid>
         </div>
       </CardContent>
     </Card>
