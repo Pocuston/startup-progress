@@ -1,26 +1,26 @@
 import { nanoid } from "nanoid";
 
-export interface Stage {
+export interface StageModel {
   id: string;
   name: string;
-  steps: Step[];
+  steps: StepModel[];
   completed: boolean;
 }
 
-export interface Step {
+export interface StepModel {
   id: string;
   name: string;
   completed: boolean;
 }
 
-export interface StartupProgress {
+export interface StartupProgressModel {
   name: string;
-  stages: Stage[];
+  stages: StageModel[];
 }
 
 export function isStageUnlocked(
-  startupProgress: StartupProgress,
-  stage: Stage
+  startupProgress: StartupProgressModel,
+  stage: StageModel
 ): boolean {
   const stageNumber = startupProgress.stages.findIndex(
     (s) => s.id === stage.id
@@ -32,11 +32,11 @@ export function isStageUnlocked(
 }
 
 export function updateStepCompleted(
-  currentProgress: StartupProgress,
+  currentProgress: StartupProgressModel,
   stageId: string,
   stepId: string,
   completed: boolean
-): StartupProgress {
+): StartupProgressModel {
   const updatedProgress = { ...currentProgress };
   const stage = updatedProgress.stages.find((stage) => stage.id === stageId);
   const step = stage?.steps.find((step) => step.id === stepId);
@@ -48,13 +48,13 @@ export function updateStepCompleted(
   return updatedProgress;
 }
 
-export function isStageComplete(stage: Stage): boolean {
+export function isStageComplete(stage: StageModel): boolean {
   return stage.steps.every((step) => step.completed);
 }
 
-export function addStage(currentProgress: StartupProgress, name: string) {
+export function addStage(currentProgress: StartupProgressModel, name: string) {
   const updatedProgress = { ...currentProgress };
-  const newStage: Stage = {
+  const newStage: StageModel = {
     id: nanoid(),
     name,
     steps: [],
@@ -65,7 +65,7 @@ export function addStage(currentProgress: StartupProgress, name: string) {
 }
 
 export function addStep(
-  currentProgress: StartupProgress,
+  currentProgress: StartupProgressModel,
   stageId: string,
   name: string
 ) {
@@ -80,7 +80,10 @@ export function addStep(
   return updatedProgress;
 }
 
-export function deleteStage(currentProgress: StartupProgress, stageId: string) {
+export function deleteStage(
+  currentProgress: StartupProgressModel,
+  stageId: string
+) {
   const updatedProgress = { ...currentProgress };
   updatedProgress.stages = updatedProgress.stages.filter(
     (stage) => stage.id !== stageId
@@ -89,7 +92,7 @@ export function deleteStage(currentProgress: StartupProgress, stageId: string) {
 }
 
 export function deleteStep(
-  currentProgress: StartupProgress,
+  currentProgress: StartupProgressModel,
   stageId: string,
   stepId: string
 ) {
@@ -103,7 +106,7 @@ export function deleteStep(
 }
 
 export function editStartupName(
-  currentProgress: StartupProgress,
+  currentProgress: StartupProgressModel,
   name: string
 ) {
   return { ...currentProgress, name };

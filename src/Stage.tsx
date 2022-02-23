@@ -1,4 +1,4 @@
-import { Stage } from "./model";
+import { StageModel } from "./model";
 import {
   Button,
   Card,
@@ -12,11 +12,11 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import * as React from "react";
 import { useState } from "react";
-import StepView from "./StepView";
+import StageStep from "./StageStep";
 import AddStep from "./AddStep";
 
-export interface StageViewProps {
-  stage: Stage;
+export interface StageProps {
+  stage: StageModel;
   stageNumber: number;
   isUnlocked: boolean;
   onStepCompleteChange: (
@@ -29,8 +29,7 @@ export interface StageViewProps {
   onDeleteStep: (stageId: string, stepId: string) => void;
 }
 
-//TODO: rename
-export default function StageView({
+export default function Stage({
   stage,
   stageNumber,
   isUnlocked,
@@ -38,7 +37,7 @@ export default function StageView({
   onAddStep,
   onDeleteStage,
   onDeleteStep,
-}: StageViewProps) {
+}: StageProps) {
   const [isAddInProgress, setIsAddInProgress] = useState(false);
 
   function handleStepComplete(stepId: string, completed: boolean) {
@@ -92,7 +91,7 @@ export default function StageView({
         </h2>
         <div>
           {stage.steps.map((step) => (
-            <StepView
+            <StageStep
               step={step}
               onStepCompleteChange={handleStepComplete}
               onDeleteStep={handleDeleteStep}
@@ -108,26 +107,15 @@ export default function StageView({
               onCancel={handleAddCancel}
             />
           )}
-          <Grid container spacing={2}>
-            <Grid item xs={10}>
-              {!stage.completed && (
-                <Button
-                  onClick={handleAddStepStart}
-                  disabled={isAddInProgress}
-                  startIcon={<AddIcon />}
-                >
-                  Add step
-                </Button>
-              )}
-            </Grid>
-            <Grid item xs={2}>
-              {/*{!stage.completed && (*/}
-              {/*  <IconButton onClick={handleDelete} size="small">*/}
-              {/*    <DeleteIcon sx={{ color: "secondary.light" }} />*/}
-              {/*  </IconButton>*/}
-              {/*)}*/}
-            </Grid>
-          </Grid>
+          {!stage.completed && (
+            <Button
+              onClick={handleAddStepStart}
+              disabled={isAddInProgress}
+              startIcon={<AddIcon />}
+            >
+              Add step
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>

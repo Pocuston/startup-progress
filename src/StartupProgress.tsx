@@ -8,9 +8,9 @@ import {
   editStartupName,
   isStageUnlocked,
   updateStepCompleted,
-  StartupProgress as StartupProgressModel,
+  StartupProgressModel,
 } from "./model";
-import StageView from "./StageView";
+import Stage from "./Stage";
 import AddStage from "./AddStage";
 import RandomFact from "./RandomFact";
 import StartupName from "./StartupName";
@@ -78,7 +78,7 @@ export default function StartupProgress() {
     <Box>
       <StartupName name={startupProgress.name} onEditName={handleEditName} />
       {startupProgress?.stages.map((stage, index) => (
-        <StageView
+        <Stage
           stage={stage}
           stageNumber={index}
           onStepCompleteChange={handleStepCompleteChange}

@@ -1,25 +1,24 @@
-import { Step } from "./model";
+import { StepModel } from "./model";
 import * as React from "react";
 import { ChangeEvent } from "react";
 import { Checkbox, Grid, IconButton } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 
-export interface StepViewProps {
-  step: Step;
+export interface StageStepProps {
+  step: StepModel;
   onStepCompleteChange: (stepId: string, completed: boolean) => void;
   onDeleteStep: (stepId: string) => void;
   enableCheckbox: boolean;
   enableDelete: boolean;
 }
 
-//TODO: rename
-export default function StepView({
+export default function StageStep({
   step,
   onStepCompleteChange,
   onDeleteStep,
   enableCheckbox,
   enableDelete,
-}: StepViewProps) {
+}: StageStepProps) {
   function handleCompleted(event: ChangeEvent<HTMLInputElement>) {
     onStepCompleteChange(step.id, event.target.checked);
   }

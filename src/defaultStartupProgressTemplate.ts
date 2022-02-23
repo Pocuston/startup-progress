@@ -1,6 +1,6 @@
-import { StartupProgress } from "./model";
+import { StartupProgressModel } from "./model";
 
-export const defaultStartupProgressTemplate: StartupProgress = {
+export const defaultStartupProgressTemplate: StartupProgressModel = {
   name: "My Startup Progress",
   stages: [
     {
