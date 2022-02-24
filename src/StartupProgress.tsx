@@ -12,6 +12,7 @@ import {
   resetProgress,
   StartupProgressModel,
   updateStepCompleted,
+  editStageName,
 } from "./model";
 import Stage from "./Stage";
 import AddStage from "./AddStage";
@@ -88,6 +89,12 @@ export default function StartupProgress() {
     setStartupProgress(startupProgressTestData);
   }
 
+  function handleEditStageName(stageId: string, name: string) {
+    setStartupProgress((currentProgress) => {
+      return editStageName(currentProgress, stageId, name);
+    });
+  }
+
   return (
     <Box>
       <Grid container>
@@ -113,6 +120,7 @@ export default function StartupProgress() {
           onAddStep={handleAddStep}
           onDeleteStage={handleDeleteStage}
           onDeleteStep={handleDeleteStep}
+          onEditName={handleEditStageName}
           isUnlocked={isStageUnlocked(startupProgress, stage)}
           key={stage.id}
         />

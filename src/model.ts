@@ -125,3 +125,16 @@ export function resetProgress(currentProgress: StartupProgressModel) {
   });
   return updatedProgress;
 }
+
+export function editStageName(
+  currentProgress: StartupProgressModel,
+  stageId: string,
+  name: string
+) {
+  const updatedProgress = { ...currentProgress };
+  const stage = updatedProgress.stages.find((stage) => stage.id === stageId);
+  if (stage) {
+    stage.name = name;
+  }
+  return updatedProgress;
+}
