@@ -128,7 +128,11 @@ export default function Stage({
             </Grid>
             <Grid item xs={3}>
               {stage.completed && (
-                <CheckCircleIcon color="success" fontSize="large" />
+                <CheckCircleIcon
+                  color="success"
+                  fontSize="large"
+                  sx={{ ml: 6 }}
+                />
               )}
               {!stage.completed && !isEditInProgress && (
                 <>
