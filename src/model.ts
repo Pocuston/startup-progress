@@ -23,6 +23,11 @@ export const EMPTY_STARTUP_PROGRESS: StartupProgressModel = {
   stages: [],
 };
 
+/**
+ * Returns true if the stage is unlocked, i.e. all previous stages are completed
+ * @param startupProgress
+ * @param stage
+ */
 export function isStageUnlocked(
   startupProgress: StartupProgressModel,
   stage: StageModel
@@ -36,7 +41,14 @@ export function isStageUnlocked(
   );
 }
 
-export function updateStepCompleted(
+/**
+ * Sets step as complete or incomplete and returns updated {@link StartupProgressModel}
+ * @param currentProgress
+ * @param stageId
+ * @param stepId
+ * @param completed
+ */
+export function updateStep(
   currentProgress: StartupProgressModel,
   stageId: string,
   stepId: string,
@@ -53,10 +65,19 @@ export function updateStepCompleted(
   return updatedProgress;
 }
 
+/**
+ * Returns true if the stage is completed, i.e. all steps are completed
+ * @param stage
+ */
 export function isStageComplete(stage: StageModel): boolean {
   return stage.steps.every((step) => step.completed);
 }
 
+/**
+ * Adds new stage and returns updated {@link StartupProgressModel}
+ * @param currentProgress
+ * @param name
+ */
 export function addStage(currentProgress: StartupProgressModel, name: string) {
   const updatedProgress = { ...currentProgress };
   const newStage: StageModel = {
@@ -69,6 +90,12 @@ export function addStage(currentProgress: StartupProgressModel, name: string) {
   return updatedProgress;
 }
 
+/**
+ * Adds new step to stage and returns updated {@link StartupProgressModel}
+ * @param currentProgress
+ * @param stageId
+ * @param name
+ */
 export function addStep(
   currentProgress: StartupProgressModel,
   stageId: string,
@@ -85,6 +112,11 @@ export function addStep(
   return updatedProgress;
 }
 
+/**
+ * Deletes stage and returns updated {@link StartupProgressModel}
+ * @param currentProgress
+ * @param stageId
+ */
 export function deleteStage(
   currentProgress: StartupProgressModel,
   stageId: string
@@ -96,6 +128,12 @@ export function deleteStage(
   return updatedProgress;
 }
 
+/**
+ * Deletes step and returns updated {@link StartupProgressModel}
+ * @param currentProgress
+ * @param stageId
+ * @param stepId
+ */
 export function deleteStep(
   currentProgress: StartupProgressModel,
   stageId: string,
@@ -110,6 +148,11 @@ export function deleteStep(
   return updatedProgress;
 }
 
+/**
+ * Updateds startup name and returns updated {@link StartupProgressModel}
+ * @param currentProgress
+ * @param name
+ */
 export function editStartupName(
   currentProgress: StartupProgressModel,
   name: string
@@ -117,6 +160,10 @@ export function editStartupName(
   return { ...currentProgress, name };
 }
 
+/**
+ * Resets current progress, i.e. sets all steps of all stages to incomplete and returns updated {@link StartupProgressModel}
+ * @param currentProgress
+ */
 export function resetProgress(currentProgress: StartupProgressModel) {
   const updatedProgress = { ...currentProgress };
   updatedProgress.stages.forEach((stage) => {
@@ -126,6 +173,12 @@ export function resetProgress(currentProgress: StartupProgressModel) {
   return updatedProgress;
 }
 
+/**
+ * Updates name of stage and returns updated {@link StartupProgressModel}
+ * @param currentProgress
+ * @param stageId
+ * @param name
+ */
 export function editStageName(
   currentProgress: StartupProgressModel,
   stageId: string,

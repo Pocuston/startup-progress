@@ -11,7 +11,7 @@ import {
   isStageUnlocked,
   resetProgress,
   StartupProgressModel,
-  updateStepCompleted,
+  updateStep,
   editStageName,
 } from "./model";
 import Stage from "./Stage";
@@ -45,7 +45,7 @@ export default function StartupProgress() {
     completed: boolean
   ) {
     setStartupProgress((currentProgress) => {
-      return updateStepCompleted(currentProgress, stageId, stepId, completed);
+      return updateStep(currentProgress, stageId, stepId, completed);
     });
   }
 
