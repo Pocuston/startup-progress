@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import {
   addStage,
@@ -6,16 +7,19 @@ import {
   deleteStage,
   deleteStep,
   editStartupName,
+  EMPTY_STARTUP_PROGRESS,
   isStageUnlocked,
-  updateStepCompleted,
+  resetProgress,
   StartupProgressModel,
+  updateStepCompleted,
 } from "./model";
 import Stage from "./Stage";
 import AddStage from "./AddStage";
 import RandomFact from "./RandomFact";
 import StartupName from "./StartupName";
-import { useEffect, useState } from "react";
-import { defaultStartupProgressTemplate } from "./defaultStartupProgressTemplate";
+import { startupProgressTestData } from "./startupProgressTestData";
+import { Grid } from "@mui/material";
+import Menu from "./Menu";
 
 const LOCAL_STORAGE_KEY = "startupProgress";
 
@@ -26,7 +30,7 @@ export default function StartupProgress() {
 
       return localStorageValue !== null
         ? JSON.parse(localStorageValue)
-        : defaultStartupProgressTemplate;
+        : EMPTY_STARTUP_PROGRESS;
     }
   );
 
@@ -74,9 +78,33 @@ export default function StartupProgress() {
     });
   }
 
+  function handleResetProgress() {
+    setStartupProgress((currentProgress) => {
+      return resetProgress(currentProgress);
+    });
+  }
+
+  function handleLoadTestData() {
+    setStartupProgress(startupProgressTestData);
+  }
+
   return (
     <Box>
-      <StartupName name={startupProgress.name} onEditName={handleEditName} />
+      <Grid container>
+        <Grid item xs={11}>
+          <StartupName
+            name={startupProgress.name}
+            onEditName={handleEditName}
+          />
+        </Grid>
+        <Grid xs={1}>
+          <Menu
+            onResetProgress={handleResetProgress}
+            onLoadTestData={handleLoadTestData}
+          />
+        </Grid>
+      </Grid>
+
       {startupProgress?.stages.map((stage, index) => (
         <Stage
           stage={stage}
@@ -89,15 +117,17 @@ export default function StartupProgress() {
           key={stage.id}
         />
       ))}
+
       <AddStage
         stageNumber={startupProgress?.stages.length + 1}
         onAddStage={handleAddStage}
-        showForm={startupProgress.stages.length === 0}
+        showForm={startupProgress?.stages.length === 0}
       />
+
       <RandomFact
         show={
-          startupProgress.stages.length > 0 &&
-          startupProgress.stages.every((stage) => stage.completed)
+          startupProgress?.stages.length > 0 &&
+          startupProgress?.stages.every((stage) => stage.completed)
         }
       />
     </Box>

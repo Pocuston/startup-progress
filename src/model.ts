@@ -18,6 +18,11 @@ export interface StartupProgressModel {
   stages: StageModel[];
 }
 
+export const EMPTY_STARTUP_PROGRESS: StartupProgressModel = {
+  name: "My Startup Progress",
+  stages: [],
+};
+
 export function isStageUnlocked(
   startupProgress: StartupProgressModel,
   stage: StageModel
@@ -110,4 +115,13 @@ export function editStartupName(
   name: string
 ) {
   return { ...currentProgress, name };
+}
+
+export function resetProgress(currentProgress: StartupProgressModel) {
+  const updatedProgress = { ...currentProgress };
+  updatedProgress.stages.forEach((stage) => {
+    stage.steps.forEach((step) => (step.completed = false));
+    stage.completed = false;
+  });
+  return updatedProgress;
 }

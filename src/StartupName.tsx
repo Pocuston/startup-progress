@@ -34,7 +34,7 @@ export default function StartupName({ name, onEditName }: StartupNameProps) {
 
   return (
     <>
-      <Typography variant={"h3"} sx={{ ml: 2, mt: 2 }}>
+      <Typography variant={"h4"} sx={{ ml: 2, mt: 2 }}>
         {editMode ? (
           <>
             <TextField

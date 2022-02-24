@@ -17,6 +17,9 @@ const theme = createTheme({
     background: {
       default: grey.A200,
     },
+    warning: {
+      main: red.A400,
+    },
   },
 });
 

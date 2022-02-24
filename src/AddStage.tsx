@@ -24,7 +24,7 @@ export default function AddStage({
   showForm,
 }: AddStageProps) {
   const [name, setName] = useState<string>("");
-  const [isAddStageInProgress, setIsAddStageInProgress] = useState(showForm);
+  const [isAddStageInProgress, setIsAddStageInProgress] = useState(false);
 
   function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
     setName(event.target.value);
@@ -47,7 +47,7 @@ export default function AddStage({
 
   return (
     <>
-      {isAddStageInProgress && (
+      {(isAddStageInProgress || showForm) && (
         <Card sx={{ margin: 2 }}>
           <CardContent>
             <h2>
