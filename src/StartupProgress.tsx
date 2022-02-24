@@ -97,7 +97,7 @@ export default function StartupProgress() {
             onEditName={handleEditName}
           />
         </Grid>
-        <Grid xs={1}>
+        <Grid item xs={1}>
           <Menu
             onResetProgress={handleResetProgress}
             onLoadTestData={handleLoadTestData}
