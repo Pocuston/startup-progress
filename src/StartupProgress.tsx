@@ -8,7 +8,7 @@ import {
   deleteStep,
   editStageName,
   editStartupName,
-  EMPTY_STARTUP_PROGRESS,
+  initializeProgress,
   isStageUnlocked,
   loadTestData,
   resetProgress,
@@ -31,7 +31,7 @@ export default function StartupProgress() {
 
       return localStorageValue !== null
         ? JSON.parse(localStorageValue)
-        : EMPTY_STARTUP_PROGRESS;
+        : initializeProgress();
     }
   );
 

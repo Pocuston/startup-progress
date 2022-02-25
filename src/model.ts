@@ -20,10 +20,17 @@ export interface StartupProgressModel {
   stages: StageModel[];
 }
 
-export const EMPTY_STARTUP_PROGRESS: StartupProgressModel = {
+const EMPTY_STARTUP_PROGRESS: StartupProgressModel = Object.freeze({
   name: "My Startup Progress",
   stages: [],
-};
+});
+
+/**
+ * Initializes empty (default) startup progress
+ */
+export function initializeProgress() {
+  return cloneDeep(EMPTY_STARTUP_PROGRESS);
+}
 
 /**
  * Returns true if the stage is unlocked, i.e. all previous stages are completed

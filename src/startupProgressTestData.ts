@@ -1,6 +1,6 @@
 import { StartupProgressModel } from "./model";
 
-export const startupProgressTestData: StartupProgressModel = {
+export const startupProgressTestData: StartupProgressModel = Object.freeze({
   name: "My Startup Progress",
   stages: [
     {
@@ -33,4 +33,4 @@ export const startupProgressTestData: StartupProgressModel = {
       completed: false,
     },
   ],
-};
+});
