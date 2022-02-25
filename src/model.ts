@@ -1,4 +1,6 @@
 import { nanoid } from "nanoid";
+import { startupProgressTestData } from "./startupProgressTestData";
+import cloneDeep from "clone-deep";
 
 export interface StageModel {
   id: string;
@@ -143,6 +145,7 @@ export function deleteStep(
   const stage = updatedProgress.stages.find((s) => s.id === stageId);
   if (stage !== undefined) {
     stage.steps = stage.steps.filter((s) => s.id !== stepId);
+    stage.completed = isStageComplete(stage);
   }
 
   return updatedProgress;
@@ -185,9 +188,16 @@ export function editStageName(
   name: string
 ) {
   const updatedProgress = { ...currentProgress };
-  const stage = updatedProgress.stages.find((stage) => stage.id === stageId);
-  if (stage) {
+  const stage = updatedProgress.stages.find((s) => s.id === stageId);
+  if (stage !== undefined) {
     stage.name = name;
   }
   return updatedProgress;
+}
+
+/**
+ * Loads startup progress from test data at {@link startupProgressTestData}
+ */
+export function loadTestData() {
+  return cloneDeep(startupProgressTestData);
 }

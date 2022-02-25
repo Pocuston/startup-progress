@@ -1,7 +1,7 @@
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { IconButton, Menu as MuiMenu, MenuItem } from "@mui/material";
 import * as React from "react";
-import { MouseEvent, MouseEventHandler } from "react";
+import { MouseEvent } from "react";
 
 export interface MenuProps {
   onResetProgress: () => void;

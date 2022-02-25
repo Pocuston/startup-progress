@@ -6,19 +6,19 @@ import {
   addStep,
   deleteStage,
   deleteStep,
+  editStageName,
   editStartupName,
   EMPTY_STARTUP_PROGRESS,
   isStageUnlocked,
+  loadTestData,
   resetProgress,
   StartupProgressModel,
   updateStep,
-  editStageName,
 } from "./model";
 import Stage from "./Stage";
 import AddStage from "./AddStage";
 import RandomFact from "./RandomFact";
 import StartupName from "./StartupName";
-import { startupProgressTestData } from "./startupProgressTestData";
 import { Grid } from "@mui/material";
 import Menu from "./Menu";
 
@@ -86,7 +86,7 @@ export default function StartupProgress() {
   }
 
   function handleLoadTestData() {
-    setStartupProgress(startupProgressTestData);
+    setStartupProgress(loadTestData());
   }
 
   function handleEditStageName(stageId: string, name: string) {
