@@ -1,6 +1,6 @@
 {
-  "name": "create-react-app-with-typescript",
-  "version": "5.0.0",
+  "name": "startup-progress-app",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "@emotion/react": "latest",
