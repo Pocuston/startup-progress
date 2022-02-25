@@ -78,7 +78,7 @@ export function updateStep(
  * Returns true if the stage is completed, i.e. all steps are completed
  * @param stage
  */
-export function isStageComplete(stage: StageModel): boolean {
+function isStageComplete(stage: StageModel): boolean {
   return stage.steps.length > 0 && stage.steps.every((step) => step.completed);
 }
 

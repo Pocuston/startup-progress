@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@types/clone-deep": "^4.0.1",
+    "@types/jest": "^27.4.1",
     "prettier": "^2.5.1"
   }
 }
