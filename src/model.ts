@@ -72,7 +72,7 @@ export function updateStep(
  * @param stage
  */
 export function isStageComplete(stage: StageModel): boolean {
-  return stage.steps.every((step) => step.completed);
+  return stage.steps.length > 0 && stage.steps.every((step) => step.completed);
 }
 
 /**
